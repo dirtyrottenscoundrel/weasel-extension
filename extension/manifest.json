@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+
+    "name": "Weasel bREPL Client",
+    "description": "Weasel bREPL client for Chrome DevTools",
+    "version": "0.0.1",
+    "author": "John Guidry",
+
+    "devtools_page": "devtools.html",
+
+    "content_security_policy": "default-src 'self'  chrome-extension-resource: ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';  connect-src *; frame-src *;",
+    "permissions": [
+        "tabs"
+    ]
+}
