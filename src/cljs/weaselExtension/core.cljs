@@ -6,6 +6,10 @@
 
 (declare activateForm deactivateForm)
 
+(defn updateLog [latest]
+  (let [log (sel1 "textarea")
+        msg (dommy/text log)]
+    (dommy/set-text! log (str msg latest "\r\n\r\n"))))
 
 (defn tryConnect [_]
   (let [fields (sel :input)
@@ -15,8 +19,13 @@
         ws-addr (str "ws://" (:hostname opts) ":" (:port opts))]
 
     (repl/connect ws-addr
-                  :on-open #(deactivateForm)
-                  :on-close #(activateForm)
+                  :on-open #(do
+                              (updateLog (str ">> Websocket connection opened to " ws-addr))
+                              (deactivateForm))
+                  :on-close #(do
+                               (updateLog ">> Websocket connection closed")
+                               (activateForm))
+                  :on-error #(updateLog  ">> Websocket connection error")
                   :verbose true)))
 
 (defn activateForm []
