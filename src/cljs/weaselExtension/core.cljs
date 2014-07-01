@@ -6,24 +6,18 @@
 
 (declare activateForm deactivateForm)
 
-(defn startPolling []
-  (let [interval-id (atom nil)
-        checkState #(when-not (repl/alive?) 
-                      (js/clearInterval @interval-id)
-                      (activateForm))]
-   
-    (reset! interval-id (js/setInterval checkState 2000))))
 
 (defn tryConnect [_]
   (let [fields (sel :input)
         keys (map #(keyword (dommy/attr % :id)) fields)
         vals (map dommy/value fields)
-        opts (zipmap keys vals)]
+        opts (zipmap keys vals)
+        ws-addr (str "ws://" (:hostname opts) ":" (:port opts))]
 
-    (repl/connect (str "ws://" (:hostname opts) ":" (:port opts))
-                  :verbose true))
- 
-  (deactivateForm))
+    (repl/connect ws-addr
+                  :on-open #(deactivateForm)
+                  :on-close #(activateForm)
+                  :verbose true)))
 
 (defn activateForm []
   (doseq [tag (sel "input,button")]
@@ -33,9 +27,7 @@
 
 (defn deactivateForm []
   (doseq [tag (sel "input,button")]
-    (dommy/set-attr! tag :disabled))
- 
-  (startPolling))
+    (dommy/set-attr! tag :disabled)))
 
 (if (repl/alive?)
   (deactivateForm)
