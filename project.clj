@@ -5,14 +5,14 @@
             :url "http://unlicense.org/UNLICENSE"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2202"]
-                 [weasel "0.2.1-jtg-SNAPSHOT"]
-                 [prismatic/dommy "0.1.2"]]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojurescript "0.0-2665"]
+                 [weasel "0.5.0-jtg-SNAPSHOT"]
+                 [prismatic/dommy "1.0.0"]]
 
   :source-paths ["src"]
-  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.3"]]
-                   :plugins [[lein-cljsbuild "1.0.3"]]
+  :profiles {:dev {:dependencies [[com.cemerick/piggieback "0.1.4"]]
+                   :plugins [[lein-cljsbuild "1.0.4"]]
                    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :cljsbuild {:builds [{:id "weasel-extension"
                                          :source-paths ["src"]

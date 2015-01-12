@@ -1,8 +1,6 @@
 (ns weaselExtension.core
   (:require [weasel.repl :as repl]
-            [dommy.utils :as utils]
-            [dommy.core :as dommy])
-  (:use-macros [dommy.macros :only [sel sel1]]))
+            [dommy.core :as dommy :refer-macros [sel sel1]]))
 
 (declare activateForm deactivateForm)
 
